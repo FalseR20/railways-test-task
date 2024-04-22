@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="">
+<head>
+    <meta charset="UTF-8">
+    <title>Article</title>
+    <script>
+        // noinspection JSUnusedGlobalSymbols
+        function deleteArticle(articleId) {
+            fetch(`/api/articles/${articleId}`, {method: "DELETE"}).then(() => {
+                window.location.href = "/";
+            })
+        }
+    </script>
+</head>
+<body>
+<a href="/">Home</a>
+<h1 th:text="|Article: ${article.text}|"></h1>
+<div>
+    <div>
+        <strong>
+            Title:
+        </strong>
+        <span th:text="${article.title}"></span>
+    </div>
+    <div>
+        <strong>
+            Text:
+        </strong>
+        <span th:text="${article.text}"></span>
+    </div>
+    <div>
+        <strong>
+            Likes:
+        </strong>
+        <span th:text="${article.likesCount}"></span>
+    </div>
+</div>
+<a th:href="@{/{id}/edit(id=${article.id})}">Edit</a>
+<br/>
+<button th:onclick="|deleteArticle(${article.id})|">Delete</button>
+</body>
+</html>

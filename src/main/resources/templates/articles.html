@@ -1,26 +1,35 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="">
 <head>
-    <meta charset="UTF-8">
     <title>Articles</title>
 </head>
 <body>
-<h1>List of Articles</h1>
-<table>
-    <thead>
-    <tr>
-        <th>Title</th>
-        <th>Text</th>
-        <th>Likes Count</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="article : ${articles}">
-        <td th:text="${article.title}"></td>
-        <td th:text="${article.text}"></td>
-        <td th:text="${article.likesCount}"></td>
-    </tr>
-    </tbody>
-</table>
+<a href="">Home</a>
+<div>
+    <h1>List of Articles</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Text</th>
+            <th>Likes Count</th>
+            <th>Link</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="article : ${articles}">
+            <td th:text="${article.title}"></td>
+            <td th:text="${article.text}"></td>
+            <td th:text="${article.likesCount}"></td>
+            <td>
+                <div>
+                    <a th:href="@{/{id}(id=${article.id})}">Link</a>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a href="/new">Create</a>
+</div>
 </body>
 </html>

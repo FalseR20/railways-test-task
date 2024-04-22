@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Article</title>
+    <script>
+        function updateArticle(articleId) {
+            let formData = new FormData()
+            formData.set("title", document.getElementById("titleInput").value)
+            formData.set("text", document.getElementById("textInput").value)
+            fetch(`/api/articles/${articleId}`, {method: "PUT", body: formData}).then(() => {
+                window.location.href = "/" + articleId;
+            })
+        }
+    </script>
+</head>
+<body>
+<a href="/">Home</a>
+<h1>Edit Article</h1>
+<form id="editForm">
+    <label for="titleInput">Title:</label>
+    <input type="text" id="titleInput" th:value="${article.title}" required/>
+    <hr/>
+    <label for="textInput">Text:</label>
+    <textarea id="textInput" th:text="${article.text}" required></textarea>
+    <hr/>
+    <button type="submit" th:onClick="|updateArticle(${article.id})|">Save</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Article</title>
+    <script>
+        function createArticle() {
+            let formData = new FormData()
+            formData.set("title", document.getElementById("titleInput").value)
+            formData.set("text", document.getElementById("textInput").value)
+            fetch(`/api/articles/new`, {method: "POST", body: formData}).then((response) => {
+                response.json().then((data) => {
+                    window.location.href = "/" + data.id;
+                })
+            })
+        }
+    </script>
+</head>
+<body>
+<a href="/">Home</a>
+<h1>Create Article</h1>
+<form id="createForm">
+    <label for="titleInput">Title:</label>
+    <input type="text" id="titleInput" required/>
+    <hr/>
+    <label for="textInput">Text:</label>
+    <textarea id="textInput" required></textarea>
+    <hr/>
+    <button type="submit" th:onClick="createArticle()">Save</button>
+</form>
+</body>
+</html>
