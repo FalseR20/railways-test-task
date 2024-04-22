@@ -1,20 +1,23 @@
-package dev.falser.railways_test_task;
+package dev.falser.railways_test_task.articles.controllers;
 
+import dev.falser.railways_test_task.articles.repositories.ArticleRepository;
+import dev.falser.railways_test_task.articles.models.Article;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
 @RestController
-public class ArticleController {
+@RequestMapping("/api/articles")
+public class ArticleAPIController {
 
     private final ArticleRepository articleRepository;
 
-    public ArticleController(ArticleRepository articleRepository) {
+    public ArticleAPIController(ArticleRepository articleRepository) {
         this.articleRepository = articleRepository;
     }
 
-    @PostMapping("/articles/new")
+    @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)
     public Article add(@RequestPart String title, @RequestPart String text) {
         Article article = new Article();
@@ -25,17 +28,17 @@ public class ArticleController {
         return article;
     }
 
-    @GetMapping("/articles")
+    @GetMapping("")
     public Iterable<Article> getList() {
         return articleRepository.findAll();
     }
 
-    @GetMapping("/articles/{id}")
+    @GetMapping("/{id}")
     public Article get(@PathVariable Integer id) {
         return articleRepository.findCustomerById(id);
     }
 
-    @PutMapping("/articles/{id}")
+    @PutMapping("/{id}")
     public Article update(@PathVariable Integer id, @RequestPart String title, @RequestPart String text) {
         var article = articleRepository.findCustomerById(id);
         article.setTitle(title);
@@ -44,7 +47,7 @@ public class ArticleController {
         return article;
     }
 
-    @PatchMapping("/articles/{id}")
+    @PatchMapping("/{id}")
     public Article partialUpdate(@PathVariable Integer id, @RequestPart Optional<String> title, @RequestPart Optional<String> text) {
         var article = articleRepository.findCustomerById(id);
         title.ifPresent(article::setTitle);
@@ -53,9 +56,17 @@ public class ArticleController {
         return article;
     }
 
-    @DeleteMapping("/articles/{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Integer id) {
         articleRepository.deleteById(id);
+    }
+
+    @PostMapping("/{id}/like")
+    public Article like(@PathVariable Integer id) {
+        var article = articleRepository.findCustomerById(id);
+        article.setLikesCount(article.getLikesCount() + 1);
+        articleRepository.save(article);
+        return article;
     }
 }

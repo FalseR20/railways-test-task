@@ -1,4 +1,4 @@
-package dev.falser.railways_test_task;
+package dev.falser.railways_test_task.articles.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,7 +14,6 @@ public class Article {
     private String title;
     private String text;
     private Integer likesCount;
-//    private String imagePath;
 
 
     public Integer getId() {
@@ -44,12 +43,4 @@ public class Article {
     public Integer getLikesCount() {
         return likesCount;
     }
-
-//    public String getImagePath() {
-//        return imagePath;
-//    }
-//
-//    public void setImagePath(String imagePath) {
-//        this.imagePath = imagePath;
-//    }
 }
