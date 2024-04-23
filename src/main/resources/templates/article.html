@@ -6,14 +6,21 @@
     <script>
         // noinspection JSUnusedGlobalSymbols
         function deleteArticle(articleId) {
-            fetch(`/api/articles/${articleId}`, {method: "DELETE"}).then(() => {
-                window.location.href = "/";
+            const init = {method: "DELETE"}
+            const token = localStorage.getItem("token")
+            if (token) {
+                init.headers = {"Authorization": `Bearer ${token}`}
+            }
+            fetch(`/api/articles/${articleId}`, init).then((response) => {
+                console.log(response)
+                // window.location.href = "/";
             })
         }
     </script>
 </head>
 <body>
 <a href="/">Home</a>
+<a href="/articles/">Articles</a>
 <h1 th:text="|Article: ${article.text}|"></h1>
 <div>
     <div>
@@ -35,7 +42,7 @@
         <span th:text="${article.likesCount}"></span>
     </div>
 </div>
-<a th:href="@{/{id}/edit(id=${article.id})}">Edit</a>
+<a th:href="@{/articles/{id}/edit(id=${article.id})}">Edit</a>
 <br/>
 <button th:onclick="|deleteArticle(${article.id})|">Delete</button>
 </body>

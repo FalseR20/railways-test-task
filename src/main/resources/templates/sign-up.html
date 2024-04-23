@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign up</title>
+    <script>
+        function signUp(articleId) {
+            let formData = new FormData()
+            formData.set("username", document.getElementById("usernameInput").value)
+            formData.set("password", document.getElementById("passwordInput").value)
+            formData.set("email", document.getElementById("emailInput").value)
+            fetch(`/api/auth/sign-up`, {method: "POST", body: formData}).then((response) => {
+                response.json().then((data) => {
+                    console.log(data)
+                    localStorage.setItem("token", data.token)
+                    window.location.href = "/";
+                })
+
+            })
+        }
+    </script>
+</head>
+<body>
+<a href="/">Home</a>
+<h1>Sign Up</h1>
+<form id="signUpForm">
+    <label for="usernameInput">Username:</label>
+    <input type="text" autocomplete="username" id="usernameInput" required/>
+    <hr/>
+    <label for="passwordInput">Password:</label>
+    <input type="password" autocomplete="new-password" id="passwordInput"  required/>
+    <hr/>
+    <label for="emailInput">Email:</label>
+    <input type="email" autocomplete="email" id="emailInput"  required/>
+    <hr/>
+    <button type="button" th:onClick="signUp()">Save</button>
+</form>
+</body>
+</html>

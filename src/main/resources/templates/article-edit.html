@@ -8,14 +8,20 @@
             let formData = new FormData()
             formData.set("title", document.getElementById("titleInput").value)
             formData.set("text", document.getElementById("textInput").value)
-            fetch(`/api/articles/${articleId}`, {method: "PUT", body: formData}).then(() => {
-                window.location.href = "/" + articleId;
+            const init = {method: "PUT", body: formData}
+            const token = localStorage.getItem("token")
+            if (token) {
+                init.headers = {"Authorization": `Bearer ${token}`}
+            }
+            fetch(`/api/articles/${articleId}`, init).then(() => {
+                window.location.href = "/articles" + articleId;
             })
         }
     </script>
 </head>
 <body>
 <a href="/">Home</a>
+<a href="/articles/">Articles</a>
 <h1>Edit Article</h1>
 <form id="editForm">
     <label for="titleInput">Title:</label>

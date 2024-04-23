@@ -1,34 +1,26 @@
 package dev.falser.railways_test_task.users.controllers;
 
-import dev.falser.railways_test_task.users.dto.JwtAuthenticationResponse;
-import dev.falser.railways_test_task.users.dto.SignInRequest;
-import dev.falser.railways_test_task.users.dto.SignUpRequest;
-import dev.falser.railways_test_task.users.services.AuthenticationService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
+import dev.falser.railways_test_task.users.services.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 @RequestMapping("/auth")
 @RequiredArgsConstructor
-@Tag(name = "Аутентификация")
 public class AuthController {
-    private final AuthenticationService authenticationService;
+    private final UserService service;
 
-    @Operation(summary = "Регистрация пользователя")
-    @PostMapping("/sign-up")
-    public JwtAuthenticationResponse signUp(@RequestBody @Valid SignUpRequest request) {
-        return authenticationService.signUp(request);
+    @GetMapping("/sign-up")
+    public String signUp(Model model) {
+        return "sign-up";
     }
 
-    @Operation(summary = "Авторизация пользователя")
-    @PostMapping("/sign-in")
-    public JwtAuthenticationResponse signIn(@RequestBody @Valid SignInRequest request) {
-        return authenticationService.signIn(request);
+    @GetMapping("/sign-in")
+    public String signIn(Model model) {
+        return "sign-in";
     }
+
 }

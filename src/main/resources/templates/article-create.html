@@ -8,9 +8,14 @@
             let formData = new FormData()
             formData.set("title", document.getElementById("titleInput").value)
             formData.set("text", document.getElementById("textInput").value)
-            fetch(`/api/articles/new`, {method: "POST", body: formData}).then((response) => {
+            const init = {method: "POST", body: formData}
+            const token = localStorage.getItem("token")
+            if (token) {
+                init.headers = {"Authorization": `Bearer ${token}`}
+            }
+            fetch(`/api/articles/new`, init).then((response) => {
                 response.json().then((data) => {
-                    window.location.href = "/" + data.id;
+                    window.location.href = "/articles/" + data.id;
                 })
             })
         }
@@ -18,6 +23,7 @@
 </head>
 <body>
 <a href="/">Home</a>
+<a href="/articles/">Articles</a>
 <h1>Create Article</h1>
 <form id="createForm">
     <label for="titleInput">Title:</label>

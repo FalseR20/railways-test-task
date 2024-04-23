@@ -4,7 +4,8 @@
     <title>Articles</title>
 </head>
 <body>
-<a href="">Home</a>
+<a href="/">Home</a>
+<a href="/articles/">Articles</a>
 <div>
     <h1>List of Articles</h1>
     <table>
@@ -23,13 +24,13 @@
             <td th:text="${article.likesCount}"></td>
             <td>
                 <div>
-                    <a th:href="@{/{id}(id=${article.id})}">Link</a>
+                    <a th:href="@{/articles/{id}(id=${article.id})}">Link</a>
                 </div>
             </td>
         </tr>
         </tbody>
     </table>
-    <a href="/new">Create</a>
+    <a href="/articles/new">Create</a>
 </div>
 </body>
 </html>
