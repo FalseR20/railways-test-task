@@ -14,7 +14,7 @@
                 init.headers = {"Authorization": `Bearer ${token}`}
             }
             fetch(`/api/articles/${articleId}`, init).then(() => {
-                window.location.href = "/articles" + articleId;
+                window.location.href = "/articles/" + articleId;
             })
         }
     </script>

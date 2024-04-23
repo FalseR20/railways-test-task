@@ -25,3 +25,13 @@
 1. скрипт для создания объектов в базе данных;
 2. приложение в виде, пригодном для размещения в Apache Tomcat;
 3. изменения в конфигурационные файлы MySQL и Apache Tomcat (при необходимости).
+
+## Installation
+
+Copy `.env` example file:
+
+```shell
+cp example.env .env
+```
+
+Then build and run.
