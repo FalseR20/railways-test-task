@@ -16,7 +16,7 @@ public class ArticleController {
         this.articleRepository = articleRepository;
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     public String list(Model model) {
         Iterable<Article> articles = articleRepository.findAll();
         model.addAttribute("articles", articles);
