@@ -34,4 +34,15 @@ Copy `.env` example file:
 cp example.env .env
 ```
 
+Set MySQL:
+
+```shell
+sudo mysql
+```
+```mysql
+CREATE DATABASE railways;
+CREATE USER 'railways'@'localhost' IDENTIFIED WITH mysql_native_password BY 'YOUR_PASSWORD';
+GRANT ALL PRIVILEGES ON railways.* TO 'railways'@'localhost';
+```
+
 Then build and run.
