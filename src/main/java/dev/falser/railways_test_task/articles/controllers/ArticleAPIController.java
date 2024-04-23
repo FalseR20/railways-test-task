@@ -5,6 +5,7 @@ import dev.falser.railways_test_task.articles.models.Article;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @RestController
@@ -24,6 +25,7 @@ public class ArticleAPIController {
         article.setTitle(title);
         article.setText(text);
         article.setLikesCount(0);
+        article.setCreatedAt(LocalDateTime.now());
         articleRepository.save(article);
         return article;
     }

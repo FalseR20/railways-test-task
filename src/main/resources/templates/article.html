@@ -5,15 +5,27 @@
     <title>Article</title>
     <script>
         // noinspection JSUnusedGlobalSymbols
+        function like(articleId) {
+            const init = {method: "POST"}
+            const token = localStorage.getItem("token")
+            if (token) {
+                init.headers = {"Authorization": `Bearer ${token}`}
+            }
+            fetch(`/api/articles/${articleId}/like`, init).then((response) => {
+                console.log(response)
+                window.location.reload()
+            })
+    }
+
+    // noinspection JSUnusedGlobalSymbols
         function deleteArticle(articleId) {
             const init = {method: "DELETE"}
             const token = localStorage.getItem("token")
             if (token) {
                 init.headers = {"Authorization": `Bearer ${token}`}
             }
-            fetch(`/api/articles/${articleId}`, init).then((response) => {
-                console.log(response)
-                // window.location.href = "/";
+            fetch(`/api/articles/${articleId}`, init).then(() => {
+                window.location.href = "/";
             })
         }
     </script>
@@ -40,6 +52,13 @@
             Likes:
         </strong>
         <span th:text="${article.likesCount}"></span>
+        <button th:onclick="|like(${article.id})|">+Like</button>
+    </div>
+    <div>
+        <strong>
+            Created at:
+        </strong>
+        <span th:text="${article.createdAt}"></span>
     </div>
 </div>
 <a th:href="@{/articles/{id}/edit(id=${article.id})}">Edit</a>

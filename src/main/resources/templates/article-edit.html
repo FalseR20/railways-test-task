@@ -30,7 +30,7 @@
     <label for="textInput">Text:</label>
     <textarea id="textInput" th:text="${article.text}" required></textarea>
     <hr/>
-    <button type="submit" th:onClick="|updateArticle(${article.id})|">Save</button>
+    <button type="button" th:onClick="|updateArticle(${article.id})|">Save</button>
 </form>
 </body>
 </html>
