@@ -35,6 +35,12 @@
 <a href="/articles">Articles</a>
 <h1 th:text="|Article: ${article.text}|"></h1>
 <div>
+    <div th:if="${article.image}">
+        <strong>
+            Image
+        </strong>
+        <img th:src="@{/article-images/{id}(id=${article.id})}" alt="Image">
+    </div>
     <div>
         <strong>
             Title:

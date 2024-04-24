@@ -9,6 +9,10 @@
             formData.set("title", document.getElementById("titleInput").value)
             formData.set("text", document.getElementById("textInput").value)
             formData.set("createdAt", document.getElementById("createdAtInput").value)
+            let files = document.getElementById("image").files
+            if (files) {
+                formData.set("image", files[0])
+            }
             const init = {method: "PUT", body: formData}
             const token = localStorage.getItem("token")
             if (token) {
@@ -33,6 +37,10 @@
     <hr/>
     <label for="createdAtInput">Created at:</label>
     <input type="datetime-local" step="1" id="createdAtInput" th:value="${article.createdAtFormatted}" required></input>
+    <hr/>
+    <label for="image">Image</label>
+    <img th:src="@{/article-images/{id}(id=${article.id})}" alt="Image">
+    <input type="file" id="image"/>
     <hr/>
     <button type="button" th:onClick="|updateArticle(${article.id})|">Save</button>
 </form>

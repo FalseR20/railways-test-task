@@ -19,6 +19,9 @@ public class Article {
     private String text;
     private Integer likesCount;
     private LocalDateTime createdAt;
+    @Column(length = 1024 * 1024)
+    @Lob
+    private byte[] image;
 
     public String getCreatedAtFormatted() {
         DateTimeFormatter formFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");

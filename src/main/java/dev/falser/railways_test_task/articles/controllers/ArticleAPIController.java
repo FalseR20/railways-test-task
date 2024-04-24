@@ -4,7 +4,9 @@ import dev.falser.railways_test_task.articles.repositories.ArticleRepository;
 import dev.falser.railways_test_task.articles.models.Article;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
@@ -21,7 +23,7 @@ public class ArticleAPIController {
 
     @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)
-    public Article add(@RequestPart String title, @RequestPart String text, @RequestPart Optional<String> createdAt) {
+    public Article add(@RequestPart String title, @RequestPart String text, @RequestPart Optional<String> createdAt, @RequestPart Optional<MultipartFile> image) throws IOException {
         Article article = new Article();
         article.setTitle(title);
         article.setText(text);
@@ -31,6 +33,10 @@ public class ArticleAPIController {
         } else {
             article.setCreatedAt(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
         }
+        if (image.isPresent()) {
+            article.setImage(image.get().getBytes());
+        }
+
         articleRepository.save(article);
         return article;
     }
@@ -46,21 +52,27 @@ public class ArticleAPIController {
     }
 
     @PutMapping("/{id}")
-    public Article update(@PathVariable Integer id, @RequestPart String title, @RequestPart String text, @RequestPart String createdAt) {
+    public Article update(@PathVariable Integer id, @RequestPart String title, @RequestPart String text, @RequestPart String createdAt, @RequestPart Optional<MultipartFile> image) throws IOException {
         var article = articleRepository.findCustomerById(id);
         article.setTitle(title);
         article.setText(text);
         article.setCreatedAt(LocalDateTime.parse(createdAt));
+        if (image.isPresent()) {
+            article.setImage(image.get().getBytes());
+        }
         articleRepository.save(article);
         return article;
     }
 
     @PatchMapping("/{id}")
-    public Article partialUpdate(@PathVariable Integer id, @RequestPart Optional<String> title, @RequestPart Optional<String> text, @RequestPart Optional<String> createdAt) {
+    public Article partialUpdate(@PathVariable Integer id, @RequestPart Optional<String> title, @RequestPart Optional<String> text, @RequestPart Optional<String> createdAt, @RequestPart Optional<MultipartFile> image) throws IOException {
         var article = articleRepository.findCustomerById(id);
         title.ifPresent(article::setTitle);
         text.ifPresent(article::setText);
         createdAt.ifPresent(article::setCreatedAtFormatted);
+        if (image.isPresent()) {
+            article.setImage(image.get().getBytes());
+        }
         articleRepository.save(article);
         return article;
     }
