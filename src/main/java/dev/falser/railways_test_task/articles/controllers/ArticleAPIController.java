@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
 @RestController
@@ -20,12 +21,16 @@ public class ArticleAPIController {
 
     @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)
-    public Article add(@RequestPart String title, @RequestPart String text) {
+    public Article add(@RequestPart String title, @RequestPart String text, @RequestPart Optional<String> createdAt) {
         Article article = new Article();
         article.setTitle(title);
         article.setText(text);
         article.setLikesCount(0);
-        article.setCreatedAt(LocalDateTime.now());
+        if (createdAt.isPresent()) {
+            article.setCreatedAtFormatted(createdAt.get());
+        } else {
+            article.setCreatedAt(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
+        }
         articleRepository.save(article);
         return article;
     }
@@ -41,19 +46,21 @@ public class ArticleAPIController {
     }
 
     @PutMapping("/{id}")
-    public Article update(@PathVariable Integer id, @RequestPart String title, @RequestPart String text) {
+    public Article update(@PathVariable Integer id, @RequestPart String title, @RequestPart String text, @RequestPart String createdAt) {
         var article = articleRepository.findCustomerById(id);
         article.setTitle(title);
         article.setText(text);
+        article.setCreatedAt(LocalDateTime.parse(createdAt));
         articleRepository.save(article);
         return article;
     }
 
     @PatchMapping("/{id}")
-    public Article partialUpdate(@PathVariable Integer id, @RequestPart Optional<String> title, @RequestPart Optional<String> text) {
+    public Article partialUpdate(@PathVariable Integer id, @RequestPart Optional<String> title, @RequestPart Optional<String> text, @RequestPart Optional<String> createdAt) {
         var article = articleRepository.findCustomerById(id);
         title.ifPresent(article::setTitle);
         text.ifPresent(article::setText);
+        createdAt.ifPresent(article::setCreatedAtFormatted);
         articleRepository.save(article);
         return article;
     }

@@ -8,6 +8,7 @@
             let formData = new FormData()
             formData.set("title", document.getElementById("titleInput").value)
             formData.set("text", document.getElementById("textInput").value)
+            formData.set("createdAt", document.getElementById("createdAtInput").value)
             const init = {method: "POST", body: formData}
             const token = localStorage.getItem("token")
             if (token) {
@@ -31,6 +32,9 @@
     <hr/>
     <label for="textInput">Text:</label>
     <textarea id="textInput" required></textarea>
+    <hr/>
+    <label for="createdAtInput">Created at:</label>
+    <input type="datetime-local" step="1" id="createdAtInput"/>
     <hr/>
     <button type="button" th:onClick="createArticle()">Save</button>
 </form>
