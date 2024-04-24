@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Article</title>
-    <script>
+    <script th:inline="javascript">
+        const BASE = /*[[@{/}]]*/
+
         // noinspection JSUnusedGlobalSymbols
         function like(articleId) {
             const init = {method: "POST"}
@@ -11,28 +13,28 @@
             if (token) {
                 init.headers = {"Authorization": `Bearer ${token}`}
             }
-            fetch(`/api/articles/${articleId}/like`, init).then((response) => {
+            fetch(`${BASE}api/articles/${articleId}/like`, init).then((response) => {
                 console.log(response)
                 window.location.reload()
             })
-    }
+        }
 
-    // noinspection JSUnusedGlobalSymbols
+        // noinspection JSUnusedGlobalSymbols
         function deleteArticle(articleId) {
             const init = {method: "DELETE"}
             const token = localStorage.getItem("token")
             if (token) {
                 init.headers = {"Authorization": `Bearer ${token}`}
             }
-            fetch(`/api/articles/${articleId}`, init).then(() => {
-                window.location.href = "/";
+            fetch(`${BASE}api/articles/${articleId}`, init).then(() => {
+                window.location.href = `${BASE}articles`;
             })
         }
     </script>
 </head>
 <body>
-<a href="/">Home</a>
-<a href="/articles">Articles</a>
+<a th:href="@{/}">Home</a>
+<a th:href="@{/articles}">Articles</a>
 <h1 th:text="|Article: ${article.text}|"></h1>
 <div>
     <div th:if="${article.image}">

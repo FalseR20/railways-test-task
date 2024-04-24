@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit Article</title>
-    <script>
+    <script th:inline="javascript">
+        const BASE = /*[[@{/}]]*/
+
         function createArticle() {
             let formData = new FormData()
             formData.set("title", document.getElementById("title").value)
@@ -19,17 +21,17 @@
             if (token) {
                 init.headers = {"Authorization": `Bearer ${token}`}
             }
-            fetch(`/api/articles/new`, init).then((response) => {
+            fetch(`${BASE}api/articles/new`, init).then((response) => {
                 response.json().then((data) => {
-                    window.location.href = "/articles/" + data.id;
+                    window.location.href = BASE + data.id;
                 })
             })
         }
     </script>
 </head>
 <body>
-<a href="/">Home</a>
-<a href="/articles">Articles</a>
+<a th:href="@{/}">Home</a>
+<a th:href="@{/articles}">Articles</a>
 <h1>Create Article</h1>
 <form id="createForm">
     <label for="title">Title:</label>
