@@ -23,7 +23,7 @@
             }
             fetch(`${BASE}api/articles/new`, init).then((response) => {
                 response.json().then((data) => {
-                    window.location.href = BASE + data.id;
+                    window.location.href = `${BASE}articles/${data.id}`
                 })
             })
         }

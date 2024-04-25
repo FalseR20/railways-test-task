@@ -28,21 +28,36 @@
 
 ## Installation
 
-Copy `.env` example file:
-
-```shell
-cp example.env .env
-```
-
 Set MySQL:
 
 ```shell
 sudo mysql
 ```
+
 ```mysql
 CREATE DATABASE railways;
 CREATE USER 'railways'@'localhost' IDENTIFIED WITH mysql_native_password BY 'YOUR_PASSWORD';
 GRANT ALL PRIVILEGES ON railways.* TO 'railways'@'localhost';
 ```
 
-Then build and run.
+Then use `.war` file in releases or build yourself:
+
+```shell
+./gradlew war
+```
+
+Deploy into `Tomcat`:
+
+```shell
+sudo mv ./build/libs/railways-test-task-0.0.1-plain.war /opt/tomcat/webapps/railways-test-task.war
+```
+
+Also, you need configure application:
+
+```shell
+sudo nano /opt/tomcat/webapps/railways-test-task/WEB-INF/classes/application.properties
+```
+
+Change MySQL credentials and JWT signing token.
+
+That's all. Enjoy it:)
